@@ -42,8 +42,12 @@ if (app.Environment.IsDevelopment())
 app.UseCors();
 
 // ------------------- מאזין לפורט דינמי (חשוב ל-Render) -------------------
-var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-app.Urls.Add($"http://*:{port}");
+var port = Environment.GetEnvironmentVariable("PORT");
+if (port != null)
+{
+    app.Urls.Clear(); // מוודא שהפורט הקודם לא נשאר
+    app.Urls.Add($"http://*:{port}");
+}
 // -------------------------------------------------------------------------
 
 // Route בסיסי
